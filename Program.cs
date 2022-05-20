@@ -11,6 +11,11 @@ namespace N_puzzle_cs
     {
         static void Main()
         {
+
+
+
+
+
             int[] tmp = {
 
 8, 5, 7 ,12

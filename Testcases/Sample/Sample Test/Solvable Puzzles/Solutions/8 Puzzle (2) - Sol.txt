@@ -1,0 +1,2 @@
+20 Moves
+DOWN(0,1), RIGHT(0,0), UP(1,0), UP(2,0), LEFT(2,1), LEFT(2,2), DOWN(1,2), RIGHT(1,1), DOWN(0,1), RIGHT(0,0), UP(1,0), LEFT(1,1), UP(2,1), RIGHT(2,0), DOWN(1,0), LEFT(1,1), DOWN(0,1), LEFT(0,2), UP(1,2), UP(2,2)
