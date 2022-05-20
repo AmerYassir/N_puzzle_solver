@@ -9,37 +9,69 @@ namespace N_puzzle_cs
     
     internal class Program
     {
-        static void Main()
+
+        static public int[,] TakeInput(string fileName)
         {
+            FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            StreamReader sr = new StreamReader(file);
 
-
-
-
-
-            int[] tmp = {
-
-8, 5, 7 ,12
-,9 ,15 ,6 ,3
-,1 ,0 ,4 ,2
-,13 ,14 ,10 ,11};
-            int size = 4;
-            int[,] g= { {4, 9, 7, 10 }
-,{15 ,2 ,8 ,13 }
-,{ 6, 1, 5, 14 }
-,{ 12 ,0 ,11 ,3 }}; ;
-
-            int[,] tmp2=new int[4,4];
-            for (int i = 0; i < 4; i++)
+            string sizeString = sr.ReadLine();
+            int size = int.Parse(sizeString);
+            sr.ReadLine();
+            int[,] n_Puzzle = new int[size, size];
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j < 4; j++)
+                string[] line = sr.ReadLine().Split();
+                for (int j = 0; j < size; j++)
                 {
-                    tmp2[i, j] = tmp[j + (i * 4)];
+                    int currentNumber = int.Parse(line[j]);
+                    n_Puzzle[i, j] = currentNumber;
                 }
             }
-            Grid grid = new Grid(tmp2,size);
-            N_puzzle p = new N_puzzle(g,size);
-             p.gameLoop(grid);
-            //grid.RenderGame();
+            return n_Puzzle;
+        }  
+        static public void AS_Code(int[,]input,int size,int Ham)
+        {
+            N_puzzle p = new N_puzzle(input, size);
+
+            if (Ham==0)
+            {
+                p.gameLoop(p.FirstGrid);
+                return;
+            }
+            p.gameLoop(p.FirstGrid, Ham);
+        }
+        static public void BFS_Code(int[,]input,int size)
+        {
+            int[]BFS_arr=new int[size*size];
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    BFS_arr[i * size + j] = input[i, j];
+                }
+            }
+            BFS bfs=new BFS();
+            Node firstNode=new Node(BFS_arr,size);
+            List<Node> output= bfs.Breadth(firstNode);
+            for (int i = 0; i < output.Count; i++)
+            {
+                Console.WriteLine("move " + (i + 1));
+                output[i].printPuzzle();
+            }
+        }
+        static void Main()
+        {
+            //paths for tets folders
+            string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan Only\\";
+            string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
+            // file name in the used folder , dont forget to type .txt at the end
+            string fileName = "15 Puzzle 1.txt";
+            int[,] input = TakeInput(ComMTest + fileName);
+
+            // use on of these algorithms
+            // BFS_Code(input,((input.GetLength(0))));
+            // AS_Code(input, input.GetLength(0), 0);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace N_puzzle_cs
         public int lastMove;
         public int depth;
         public int cost;
+        public int parCost;
         public bool solved;
         public bool[] validMoves;
 
@@ -102,6 +103,52 @@ namespace N_puzzle_cs
             Console.WriteLine();
 
         }
+        public int changeInManCost()
+        {
+            if (lastMove == -1)
+                return 0;
+            int startCost;
+            int finCost;
+            Grid tmp=new Grid(this);
+            Vec tmpsp = spacePos;
+
+            tmp=movePieceBcak(lastMove,tmp);
+            
+            int div, mod;
+            if (tmp.grid[tmpsp.y,tmpsp.x] % size > 0)
+            {
+                div = tmp.grid[tmpsp.y, tmpsp.x] / size;
+                mod = tmp.grid[tmpsp.y, tmpsp.x] % size - 1;
+            }
+            else
+            {
+                div = tmp.grid[tmpsp.y, tmpsp.x] / size - 1;
+                mod = size - 1;
+            }
+
+            int tmp1 = Math.Abs(div - tmpsp.y);
+            int tmp2 = Math.Abs(mod - tmpsp.x);
+            startCost = (tmp1 + tmp2);
+            tmpsp = tmp.spacePos;
+            tmp = movePiece(lastMove, tmp);
+
+            if (tmp.grid[tmpsp.y, tmpsp.x] % size > 0)
+            {
+                div = tmp.grid[tmpsp.y, tmpsp.x] / size;
+                mod = tmp.grid[tmpsp.y, tmpsp.x] % size - 1;
+            }
+            else
+            {
+                div = tmp.grid[tmpsp.y, tmpsp.x] / size - 1;
+                mod = size - 1;
+            }
+
+             tmp1 = Math.Abs(div - tmpsp.y);
+             tmp2 = Math.Abs(mod - tmpsp.x);
+            finCost = (tmp1 + tmp2);
+
+            return finCost - startCost;
+        }
         public int ManCalcCost()
         {
             int cost = 0;
@@ -141,13 +188,13 @@ namespace N_puzzle_cs
             {
                 for (int j = 0; j < size; j++)
                 {
-                    if (grid[i,j] != (i * size + j))
+                   // int tmm=grid[i, j];
+                    if (grid[i,j] != (i * size + j+1)&& grid[i,j]!=0)
                     {
                         cost++;
                     }
                 }
             }
-            this.cost = cost;
             return cost;
         }
         public void swap(int xMove,int yMove)
@@ -171,38 +218,17 @@ namespace N_puzzle_cs
             switch (direction)
             {
                 case 0:
-                    if (!g.checkMove(0, -1))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
-                        break;
-                    }
                     g.swap(0, -1);
                     break;
                 case 1:
-                    if (!g.checkMove(0, 1))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
-
-                        break;
-                    }
+    
                     g.swap(0, 1);
                     break;
                 case 2:
-                    if (!g.checkMove(-1, 0))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
-
-                        break;
-                    }
+ 
                     g.swap(-1, 0);
                     break;
                 case 3:
-                    if (!g.checkMove(1, 0))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
-
-                        break;
-                    }
                     g.swap(1, 0);
                     break;
                 default:
@@ -216,38 +242,18 @@ namespace N_puzzle_cs
             switch (direction)
             {
                 case 0:
-                    if (!g.checkMove(0, 1))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
-                        break;
-                    }
+
                     g.swap(0, 1);
                     break;
                 case 1:
-                    if (!g.checkMove(0, -1))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
-
-                        break;
-                    }
                     g.swap(0, -1);
                     break;
                 case 2:
-                    if (!g.checkMove(1, 0))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
 
-                        break;
-                    }
                     g.swap(1, 0);
                     break;
                 case 3:
-                    if (!g.checkMove(-1, 0))
-                    {
-                        Console.WriteLine("not valid Move,please try again");
 
-                        break;
-                    }
                     g.swap(-1, 0);
                     break;
                 default:

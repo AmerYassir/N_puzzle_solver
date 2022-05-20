@@ -4,21 +4,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace N_puzzle_cs
 {
     internal class N_puzzle
     {
         PriorityQueue<node,int> ppq=new PriorityQueue<node,int>();
-        Grid FirstGrid;
-       // priorityQueue pQueue;
+        public Grid FirstGrid;
         public N_puzzle(int[,] g, int insize)
         {
             FirstGrid = new Grid(g,insize);
-           // pQueue = new priorityQueue();
+        }
+        public bool IsSolveable()
+        {
+            int conv = 0;
+
+            for (int i = 0; i < FirstGrid.size; i++)
+            {
+                for (int j = 0; j < FirstGrid.size; j++)
+                {
+                    int val = FirstGrid.grid[i,j];
+                    int tmpi = i;
+                    int tmpj = j;
+                    for (int k = tmpi; k < FirstGrid.size; k++)
+                    {
+                        for (int h = tmpj; h < FirstGrid.size; h++)
+                        {
+                            //tmpj = 0;
+                            if (FirstGrid.grid[k,h] < val && FirstGrid.grid[k,h] != 0)
+                            {
+                                conv++;
+                            }
+                        }
+                        tmpj = 0;
+                    }
+                    tmpi = 0;
+
+                }
+            }
+            if (FirstGrid.size % 2 == 0)
+            {
+                if (FirstGrid.spacePos.y % 2 == 0 && conv % 2 == 1)
+                    return true;
+                if (FirstGrid.spacePos.y % 2 == 1 && conv % 2 == 0)
+                    return true;
+                return false;
+            }
+            else
+            {
+                return (conv % 2 == 0);
+
+            }
         }
         public Grid addChildrens(Grid g)
         {
-            int pDeppth = g.depth;
             g.checkValidMoves();
             node tmpNode;
 
@@ -29,7 +68,8 @@ namespace N_puzzle_cs
                     Grid tmpg = new Grid(g);
                     g =g.movePiece(i,g);
                     tmpNode.parent = tmpg;
-                    tmpNode.val = g.ManCalcCost() + (g.depth+1)+ g.cost;
+                    tmpNode.parent.parCost = tmpg.parCost;
+                    tmpNode.val = g.ManCalcCost()+ (g.depth+2)+ g.cost;
 
                     tmpNode.depth = g.depth+1;
                     tmpNode.direction = i;
@@ -40,6 +80,32 @@ namespace N_puzzle_cs
             }
             return g;
         }
+
+        public Grid addChildrens(Grid g,int Ham)
+        {
+            g.checkValidMoves();
+            node tmpNode;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (g.validMoves[i])
+                {
+                    Grid tmpg = new Grid(g);
+                    g = g.movePiece(i, g);
+                    tmpNode.parent = tmpg;
+                    tmpNode.parent.parCost = tmpg.parCost;
+                    tmpNode.val = g.HamCalcCost() + (g.depth + 2) + g.cost;
+
+                    tmpNode.depth = g.depth + 1;
+                    tmpNode.direction = i;
+                    ppq.Enqueue(tmpNode, tmpNode.val);
+                    g = g.movePieceBcak(i, g);
+                }
+
+            }
+            return g;
+        }
+
         public void gameLoop(Grid g)
         {
 
@@ -49,22 +115,42 @@ namespace N_puzzle_cs
             {
                 g = addChildrens(g);
 
-                 minNode = ppq.Dequeue(); ;
+                minNode = ppq.Dequeue(); ;
                 g =g.movePiece(minNode.direction,minNode.parent);
-
                 g.lastMove = minNode.direction;
-                
+
                 g.depth++;
                 
                 if (g.ManCalcCost() == 0)
                 {
                     Console.WriteLine("depth is " + minNode.depth);
-
-                        g.solved = true;
-
-
+                    g.solved = true;
                 }
             }
         }
+
+        public void gameLoop(Grid g,int Ham)
+        {
+
+            node minNode;
+            g.cost = g.HamCalcCost();
+            while (!g.solved)
+            {
+                g = addChildrens(g,Ham);
+
+                minNode = ppq.Dequeue(); ;
+                g = g.movePiece(minNode.direction, minNode.parent);
+                g.lastMove = minNode.direction;
+
+                g.depth++;
+
+                if (g.HamCalcCost() == 0)
+                {
+                    Console.WriteLine("depth is " + minNode.depth);
+                    g.solved = true;
+                }
+            }
+        }
+
     }
 }
