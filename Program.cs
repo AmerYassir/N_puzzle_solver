@@ -66,12 +66,12 @@ namespace N_puzzle_cs
             string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan Only\\";
             string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
             // file name in the used folder , dont forget to type .txt at the end
-            string fileName = "15 Puzzle 1.txt";
-            int[,] input = TakeInput(ComMTest + fileName);
+            string fileName = "50 Puzzle.txt";
+            int[,] input = TakeInput(ComMaHTest + fileName);
 
             // use on of these algorithms
             // BFS_Code(input,((input.GetLength(0))));
-            // AS_Code(input, input.GetLength(0), 0);
+             AS_Code(input, input.GetLength(0), 1);
         }
     }
 }

@@ -20,10 +20,9 @@ namespace N_puzzle_cs
         public int lastMove;
         public int depth;
         public int cost;
-        public int parCost;
         public bool solved;
         public bool[] validMoves;
-
+        public Grid gparent;
         public Grid(int[,] g,int insize)
         {
             grid=new int[insize,insize];
@@ -35,7 +34,7 @@ namespace N_puzzle_cs
             cost = 0;
             solved = false;
             validMoves = new bool[4];
-
+            gparent = null;
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
@@ -49,7 +48,6 @@ namespace N_puzzle_cs
                 }
             }
         }
-        
         public Grid(Grid another)
         {
             int[,] refGrid = null;
@@ -67,6 +65,7 @@ namespace N_puzzle_cs
             solved = another.solved;
             validMoves = another.validMoves;
             spacePos=another.spacePos;
+            gparent = another.gparent;
         }
         public void setData(Grid g)
         {
@@ -98,9 +97,9 @@ namespace N_puzzle_cs
                 Console.WriteLine();
             }
             Console.WriteLine();
-            Console.WriteLine("cost is : "+ManCalcCost());
+           // Console.WriteLine("cost is : "+ManCalcCost());
 
-            Console.WriteLine();
+            Console.WriteLine("Move Number "+depth);
 
         }
         public int changeInManCost()

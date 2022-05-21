@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace N_puzzle_cs
 {
+    
     internal class N_puzzle
     {
+
         PriorityQueue<node,int> ppq=new PriorityQueue<node,int>();
+        PriorityQueue<node,int> savedMoves =new PriorityQueue<node,int>();
         public Grid FirstGrid;
         public N_puzzle(int[,] g, int insize)
         {
@@ -66,10 +69,11 @@ namespace N_puzzle_cs
                 if (g.validMoves[i])
                 {
                     Grid tmpg = new Grid(g);
-                    g =g.movePiece(i,g);
+                    tmpg.gparent = g.gparent;
+
+                    g = g.movePiece(i,g);
                     tmpNode.parent = tmpg;
-                    tmpNode.parent.parCost = tmpg.parCost;
-                    tmpNode.val = g.ManCalcCost()+ (g.depth+2)+ g.cost;
+                    tmpNode.val = g.ManCalcCost()+ (g.depth+1)+ g.cost;
 
                     tmpNode.depth = g.depth+1;
                     tmpNode.direction = i;
@@ -90,10 +94,12 @@ namespace N_puzzle_cs
             {
                 if (g.validMoves[i])
                 {
+
                     Grid tmpg = new Grid(g);
+                    tmpg.gparent = g.gparent;
+
                     g = g.movePiece(i, g);
                     tmpNode.parent = tmpg;
-                    tmpNode.parent.parCost = tmpg.parCost;
                     tmpNode.val = g.HamCalcCost() + (g.depth + 2) + g.cost;
 
                     tmpNode.depth = g.depth + 1;
@@ -108,22 +114,26 @@ namespace N_puzzle_cs
 
         public void gameLoop(Grid g)
         {
-
+            Grid tmppg;
             node minNode;
             g.cost=g.ManCalcCost();
             while (!g.solved)
             {
                 g = addChildrens(g);
 
-                minNode = ppq.Dequeue(); ;
+                minNode = ppq.Dequeue();
+                tmppg=new Grid(minNode.parent);
                 g =g.movePiece(minNode.direction,minNode.parent);
                 g.lastMove = minNode.direction;
-
+                g.gparent = tmppg;
                 g.depth++;
                 
                 if (g.ManCalcCost() == 0)
                 {
                     Console.WriteLine("depth is " + minNode.depth);
+                    minNode.parent.RenderGame();
+                    paintFinalSteps(g);
+
                     g.solved = true;
                 }
             }
@@ -131,26 +141,42 @@ namespace N_puzzle_cs
 
         public void gameLoop(Grid g,int Ham)
         {
-
+            Grid tmppg;
             node minNode;
             g.cost = g.HamCalcCost();
             while (!g.solved)
             {
                 g = addChildrens(g,Ham);
+                minNode = ppq.Dequeue();
+                tmppg = new Grid(minNode.parent);
 
-                minNode = ppq.Dequeue(); ;
                 g = g.movePiece(minNode.direction, minNode.parent);
                 g.lastMove = minNode.direction;
-
+                g.gparent=tmppg;
                 g.depth++;
 
                 if (g.HamCalcCost() == 0)
                 {
                     Console.WriteLine("depth is " + minNode.depth);
+                    paintFinalSteps(g);
                     g.solved = true;
                 }
             }
         }
 
+        public void paintFinalSteps(Grid g)
+        {
+            int size = g.depth;
+            List<Grid>output= new List<Grid>();
+            while (g.gparent!=null)
+            {
+                output.Add(g);
+                g = g.gparent;
+            }
+            for (int i = 0; i < size; i++)
+            {
+                output[size-i-1].RenderGame();
+            }
+        }
     }
 }
