@@ -8,51 +8,51 @@ namespace N_puzzle_cs
 {
     class BFS
     {
-		public bool checkSamePuzzle(Node rootNode, List<Node> adj)
+		public bool checkPuzzleRepeat(Puzzle rootNode, List<Puzzle> adj)
 		{
 			bool check = true;
 			for (int i = 0; i < adj.Count; i++)
-				if (adj[i].samePuzzle(rootNode.puzzleGame))
+				if (!adj[i].puzzleRepeat(rootNode.puzzleGame))
 					check = false;
 
 			return check;
 		}
-		public List<Node> Breadth(Node root)
+		public List<Puzzle> Breadth(Puzzle puzzle)
 		{
-			bool goal = true;
-			List<Node> puzzleList = new List<Node>();
-			List<Node> CloseList = new List<Node>();
-			List<Node> OpenList = new List<Node>();
-			OpenList.Add(root);
+			bool checkPuzzleIsGoal = true;
+			List<Puzzle> solvePuzzle = new List<Puzzle>();
+			List<Puzzle> ClosePuzzle = new List<Puzzle>();
+			List<Puzzle> OpenPuzzle = new List<Puzzle>();
+			OpenPuzzle.Add(puzzle);
 
-			while (goal && OpenList.Count > 0)
+			while (checkPuzzleIsGoal && OpenPuzzle.Count > 0)
 			{
-				CloseList.Add(OpenList[0]);
-				OpenList[0].movePiece();
+				ClosePuzzle.Add(OpenPuzzle[0]);
+				OpenPuzzle[0].movePiece();
 
-				for (int i = 0; i < OpenList[0].childNode.Count; i++)
+				for (int i = 0; i < OpenPuzzle[0].childPazzle.Count; i++)
 				{
-					Node currentChild = OpenList[0].childNode[i];
+					Puzzle childOpen = OpenPuzzle[0].childPazzle[i];
 
-					if (!currentChild.testPuzzleIsGoal())
+					if (!childOpen.testPuzzleIsGoal())
 					{
-						goal = false;
+						checkPuzzleIsGoal = false;
 						//Path Trace
-						puzzleList.Add(currentChild);
-						while (currentChild.parPuzzle != null)
+						solvePuzzle.Add(childOpen);
+						while (childOpen.basicPuzzle != null)
 						{
-							currentChild = currentChild.parPuzzle;
-							puzzleList.Add(currentChild);
+							childOpen = childOpen.basicPuzzle;
+							solvePuzzle.Add(childOpen);
 						}
 					}
 
-					if (checkSamePuzzle(currentChild, OpenList) &&
-						checkSamePuzzle(currentChild, CloseList))
-						OpenList.Add(currentChild);
+					if (checkPuzzleRepeat(childOpen, OpenPuzzle) &&
+						checkPuzzleRepeat(childOpen, ClosePuzzle))
+						OpenPuzzle.Add(childOpen);
 				}
-				OpenList.RemoveAt(0);
+				OpenPuzzle.RemoveAt(0);
 			}
-			return puzzleList;
+			return solvePuzzle;
 		}
 	}
 }
