@@ -9,7 +9,6 @@ namespace N_puzzle_cs
     
     internal class Program
     {
-
         static public int[,] TakeInput(string fileName)
         {
             FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read);
@@ -62,7 +61,7 @@ namespace N_puzzle_cs
             for (int i = output.Count - 2; i >= 0; i--)
             {
                 Console.WriteLine();
-                Console.Write("  Move #" + count);
+                Console.Write(" Move Number: " + count);
                 Console.WriteLine();
                 output[i].showHowSolvePuzzle();
                 count++;
@@ -82,7 +81,9 @@ namespace N_puzzle_cs
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
-            Console.WriteLine("                    **                           Welcome to N puzzle                            **");
+            Console.WriteLine("                    **                                                                          **");
+            Console.WriteLine("                    **                            Welcome to N puzzle                           **");
+            Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
@@ -103,7 +104,23 @@ namespace N_puzzle_cs
 
             if (Choose == 1)
             {
-                AS_Code(input, input.GetLength(0), 0);
+                Console.WriteLine("How do you want to calculate the cost of a puzzle?");
+                Console.WriteLine("1. by Manhattan");
+                Console.WriteLine("2. by Hamming");
+                Console.WriteLine("-----------------------------------------------------------------------------");
+
+                Console.Write("Enter the number of the method you want to calculate the cost of a puzzle: ");
+                Choose = Convert.ToInt16(Console.ReadLine());
+                Console.WriteLine("-----------------------------------------------------------------------------");
+
+                if (Choose == 1)
+                {
+                    AS_Code(input, input.GetLength(0), 0);
+                }
+                else if (Choose == 2)
+                {
+                    AS_Code(input, input.GetLength(0), 1);
+                }
             }
             else if (Choose == 2)
             {
@@ -113,13 +130,15 @@ namespace N_puzzle_cs
         static void Main()
         {
             //paths for tets folders
-            string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
+            //string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
             //string ComMTest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
-            string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
+            string ComMTest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Complete\\Complete Test\\V. Large test case\\";
+            //string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
             //string ComMaHTest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
             // file name in the used folder , dont forget to type .txt at the end
-            string fileName = "50 Puzzle.txt";
-            int[,] input = TakeInput(ComMaHTest + fileName);
+            //string fileName = "50 Puzzle.txt";
+            string fileName = "TEST.txt";
+            int[,] input = TakeInput(ComMTest + fileName);
 
             // use on of these algorithms
             // BFS_Code(input,((input.GetLength(0))));
