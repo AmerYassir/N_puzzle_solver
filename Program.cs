@@ -78,7 +78,6 @@ namespace N_puzzle_cs
         }
         static public void start()
         {
-
             Console.WriteLine("                    ******************************************************************************");
             Console.WriteLine("                    ******************************************************************************");
             Console.WriteLine("                    **                                                                          **");
@@ -98,145 +97,256 @@ namespace N_puzzle_cs
             Console.WriteLine("                    ******************************************************************************");
             Console.WriteLine();
 
+            string SampleTestNotSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Sample\\Sample Test\\Unsolvable Puzzles\\";
+            string SampleTestSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
             string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan Only\\";
             string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
             string VLtest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\V. Large test case\\";
             string NotSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Unsolvable puzzles\\";
-
+            
             int select;
             string path="";
             string fileName="";
-            Console.WriteLine("select the input from ");
-            Console.WriteLine("1. Complete solvable Manhatten only ");
-            Console.WriteLine("2. Complete solvable Manhatten & Hamming ");
-            Console.WriteLine("3. Complete Unsolvable ");
-            Console.WriteLine("4. Complete Very Large");
+            Console.WriteLine(" select the input from ");
+            Console.WriteLine(" 1. Sample Test ");
+            Console.WriteLine(" 2. Complete Test ");
+            Console.Write("  Enter your choice: ");
             select = Convert.ToInt16(Console.ReadLine());
-            switch (select)
+            Console.WriteLine("------------------------------------------------------------------------");
+
+            switch(select)
             {
                 case 1:
-                    path= ComMTest;
-                    Console.WriteLine("what file do you want? ");
-                    Console.WriteLine(".1 15 Puzzle 1");
-                    Console.WriteLine(".2 15 Puzzle 3");
-                    Console.WriteLine(".3 15 Puzzle 4");
-                    Console.WriteLine(".4 15 Puzzle 5");
+                    Console.WriteLine(" Select the input from ");
+                    Console.WriteLine(" 1. Sample Solvable ");
+                    Console.WriteLine(" 2. Sample Unsolvable ");
+                    Console.Write("  Enter your choice: ");
                     select = Convert.ToInt16(Console.ReadLine());
-                    switch (select)
+                    Console.WriteLine("------------------------------------------------------------------------");
+                    switch(select)
                     {
                         case 1:
-                            fileName = "15 Puzzle 1.txt";
+                            path = SampleTestSolvable;
+                            Console.WriteLine(" What file do you want? ");
+                            Console.WriteLine(" 1. 8 Puzzle (1) ");
+                            Console.WriteLine(" 2. 8 Puzzle (2)");
+                            Console.WriteLine(" 3. 8 Puzzle (3)");
+                            Console.WriteLine(" 4. 15 Puzzle - 1");
+                            Console.WriteLine(" 5. 24 Puzzle 1");
+                            Console.WriteLine(" 6. 24 Puzzle 2");
+                            Console.Write("  Enter the file number you want: ");
+                            select = Convert.ToInt16(Console.ReadLine());
+                            Console.WriteLine("------------------------------------------------------------------------");
+
+                            switch (select)
+                            {
+                                case 1:
+                                    fileName = "8 Puzzle (1).txt";
+                                    break;
+                                case 2:
+                                    fileName = "8 Puzzle (2).txt";
+                                    break;
+                                case 3:
+                                    fileName = "8 Puzzle (3).txt";
+                                    break;
+                                case 4:
+                                    fileName = "15 Puzzle - 1.txt";
+                                    break;
+                                case 5:
+                                    fileName = "24 Puzzle 1.txt";
+                                    break;
+                                case 6:
+                                    fileName = "24 Puzzle 2.txt";
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                         case 2:
-                            fileName = "15 Puzzle 3.txt";
-                            break;
-                        case 3:
-                            fileName = "15 Puzzle 4.txt";
-                            break;
-                        case 4:
-                            fileName = "15 Puzzle 5.txt";
+                            path = SampleTestNotSolvable;
+                            Console.WriteLine(" What file do you want? ");
+                            Console.WriteLine(" 1. 8 Puzzle - Case 1 ");
+                            Console.WriteLine(" 2. 8 Puzzle(2) - Case 1");
+                            Console.WriteLine(" 3. 8 Puzzle(3) - Case 1");
+                            Console.WriteLine(" 4. 15 Puzzle - Case 2");
+                            Console.WriteLine(" 5. 15 Puzzle - Case 3");
+                            Console.Write("  Enter the file number you want: ");
+                            select = Convert.ToInt16(Console.ReadLine());
+                            Console.WriteLine("------------------------------------------------------------------------");
+
+                            switch (select)
+                            {
+                                case 1:
+                                    fileName = "8 Puzzle - Case 1.txt";
+                                    break;
+                                case 2:
+                                    fileName = "8 Puzzle(2) - Case 1.txt";
+                                    break;
+                                case 3:
+                                    fileName = "8 Puzzle(3) - Case 1.txt";
+                                    break;
+                                case 4:
+                                    fileName = "15 Puzzle - Case 2.txt";
+                                    break;
+                                case 5:
+                                    fileName = "15 Puzzle - Case 3.txt";
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                         default:
                             break;
                     }
                     break;
                 case 2:
-                    path = ComMaHTest;
-                    Console.WriteLine("what file do you want? ");
-                    Console.WriteLine(".1 50 Puzzle ");
-                    Console.WriteLine(".2 99 puzzle 1");
-                    Console.WriteLine(".3 99 puzzle 2");
-                    Console.WriteLine(".4 9999 puzzle");
+                    Console.WriteLine(" Select the input from ");
+                    Console.WriteLine(" 1. Complete solvable Manhatten only ");
+                    Console.WriteLine(" 2. Complete solvable Manhatten & Hamming ");
+                    Console.WriteLine(" 3. Complete Unsolvable ");
+                    Console.WriteLine(" 4. Complete Very Large");
+                    Console.Write("  Enter your choice: ");
                     select = Convert.ToInt16(Console.ReadLine());
+                    Console.WriteLine("------------------------------------------------------------------------");
+
                     switch (select)
                     {
                         case 1:
-                            fileName = "50 Puzzle.txt";
+                            path = ComMTest;
+                            Console.WriteLine(" What file do you want? ");
+                            Console.WriteLine(" 1. 15 Puzzle 1");
+                            Console.WriteLine(" 2. 15 Puzzle 3");
+                            Console.WriteLine(" 3. 15 Puzzle 4");
+                            Console.WriteLine(" 4. 15 Puzzle 5");
+                            Console.Write("  Enter the file number you want: ");
+                            select = Convert.ToInt16(Console.ReadLine());
+                            Console.WriteLine("------------------------------------------------------------------------");
+
+                            switch (select)
+                            {
+                                case 1:
+                                    fileName = "15 Puzzle 1.txt";
+                                    break;
+                                case 2:
+                                    fileName = "15 Puzzle 3.txt";
+                                    break;
+                                case 3:
+                                    fileName = "15 Puzzle 4.txt";
+                                    break;
+                                case 4:
+                                    fileName = "15 Puzzle 5.txt";
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                         case 2:
-                            fileName = "99 Puzzle - 1.txt";
+                            path = ComMaHTest;
+                            Console.WriteLine(" What file do you want? ");
+                            Console.WriteLine(" 1. 50 Puzzle ");
+                            Console.WriteLine(" 2. 99 puzzle 1");
+                            Console.WriteLine(" 3. 99 puzzle 2");
+                            Console.WriteLine(" 4. 9999 puzzle");
+                            Console.Write("  Enter the file number you want: ");
+                            select = Convert.ToInt16(Console.ReadLine());
+                            Console.WriteLine("------------------------------------------------------------------------");
+
+                            switch (select)
+                            {
+                                case 1:
+                                    fileName = "50 Puzzle.txt";
+                                    break;
+                                case 2:
+                                    fileName = "99 Puzzle - 1.txt";
+                                    break;
+                                case 3:
+                                    fileName = "99 Puzzle - 2.txt";
+                                    break;
+                                case 4:
+                                    fileName = "9999 Puzzle.txt";
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                         case 3:
-                            fileName = "99 Puzzle - 2.txt";
+                            path = NotSolvable;
+                            Console.WriteLine(" What file do you want? ");
+                            Console.WriteLine(" 1. 15 Puzzle 1 - Unsolvable ");
+                            Console.WriteLine(" 2. 99 Puzzle - Unsolvable Case 1");
+                            Console.WriteLine(" 3. 99 Puzzle - Unsolvable Case 2");
+                            Console.WriteLine(" 4. 9999 Puzzle");
+                            Console.Write("  Enter the file number you want: ");
+                            select = Convert.ToInt16(Console.ReadLine());
+                            Console.WriteLine("------------------------------------------------------------------------");
+
+                            switch (select)
+                            {
+                                case 1:
+                                    fileName = "15 Puzzle 1 - Unsolvable.txt";
+                                    break;
+                                case 2:
+                                    fileName = "99 Puzzle - Unsolvable Case 1.txt";
+                                    break;
+                                case 3:
+                                    fileName = "99 Puzzle - Unsolvable Case 2.txt";
+                                    break;
+                                case 4:
+                                    fileName = "9999 Puzzle.txt";
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                         case 4:
-                            fileName = "9999 Puzzle.txt";
+                            path = VLtest;
+                            fileName = "TEST.txt";
                             break;
                         default:
                             break;
                     }
                     break;
-                case 3:
-                    path = NotSolvable;
-                    Console.WriteLine("what file do you want? ");
-                    Console.WriteLine(".1 15 puzzle Un sol ");
-                    Console.WriteLine(".2 99 puzzle 1 Un sol");
-                    Console.WriteLine(".3 99 puzzle 2 Un sol");
-                    Console.WriteLine(".4 9999 puzzle Un sol");
-                    select = Convert.ToInt16(Console.ReadLine());
-                    switch (select)
-                    {
-                        case 1:
-                            fileName = "15 Puzzle 1 - Unsolvable.txt";
-                            break;
-                        case 2:
-                            fileName = "99 Puzzle - Unsolvable Case 1.txt";
-                            break;
-                        case 3:
-                            fileName = "99 Puzzle - Unsolvable Case 2.txt";
-                            break;
-                        case 4:
-                            fileName = "9999 Puzzle.txt";
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case 4:
-                    path = VLtest;
-                    fileName = "TEST.txt";
-                    break;
+
                 default:
                     break;
             }
             int[,] input = TakeInput(path+fileName);
 
             int Choose;
-            Console.WriteLine("How do you want to solve the puzzle?");
-            Console.WriteLine("1. solve by A* algorithm");
-            Console.WriteLine("2. solve by BFS algorithm");
-            Console.WriteLine("------------------------------------------------------------------------");
-            Console.Write("Enter the number of the solution method you want to solve the puzzle: ");
+            Console.WriteLine(" How do you want to solve the puzzle?");
+            Console.WriteLine(" 1. solve by A* algorithm");
+            Console.WriteLine(" 2. solve by BFS algorithm");
+            Console.Write("  Enter the number of the solution method you want to solve the puzzle: ");
             Choose = Convert.ToInt16(Console.ReadLine());
             Console.WriteLine("------------------------------------------------------------------------");
             N_puzzle p = new N_puzzle(input, input.GetLength(0));
 
             if (!p.IsSolveable())
             {
-                Console.WriteLine("Not Solvable ...\n");
+                Console.WriteLine(" Not Solvable ...\n");
                 return;
             }
-            if (Choose == 1)
+            switch (Choose)
             {
-                Console.WriteLine("1. solve by Manhatten function");
-                Console.WriteLine("2. solve by Hamming function");
-                Console.Write("Enter the number of the herustix function you want to solve the puzzle: ");
-                Choose = Convert.ToInt16(Console.ReadLine());
-                AS_Code(input, input.GetLength(0), Choose);
+                case 1:
+                    Console.WriteLine(" 1. solve by Manhatten function");
+                    Console.WriteLine(" 2. solve by Hamming function");
+                    Console.Write("  Enter the number of the herustix function you want to solve the puzzle: ");
+                    Choose = Convert.ToInt16(Console.ReadLine());
+                    Console.WriteLine("------------------------------------------------------------------------");
+                    AS_Code(input, input.GetLength(0), Choose);
+                    break;
+                case 2:
+                    BFS_Code(input, ((input.GetLength(0))));
+                    break;
+                default:
+                    break;
             }
-            else if (Choose == 2)
-            {
-                BFS_Code(input, ((input.GetLength(0))));
-            }
+           
         }
         static void Main()
         {
-            
-
             start();
-
-           
-
         }
     }
 }
