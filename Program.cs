@@ -100,7 +100,7 @@ namespace N_puzzle_cs
 
             string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan Only\\";
             string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
-            string VLtest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\V. Large test case\\TEST.txt";
+            string VLtest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\V. Large test case\\";
             string NotSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Unsolvable puzzles\\";
 
             int select;
@@ -109,8 +109,8 @@ namespace N_puzzle_cs
             Console.WriteLine("select the input from ");
             Console.WriteLine("1. Complete solvable Manhatten only ");
             Console.WriteLine("2. Complete solvable Manhatten & Hamming ");
-            Console.WriteLine("1. Complete Unsolvable ");
-            Console.WriteLine("2. Complete Very Large");
+            Console.WriteLine("3. Complete Unsolvable ");
+            Console.WriteLine("4. Complete Very Large");
             select = Convert.ToInt16(Console.ReadLine());
             switch (select)
             {
@@ -194,7 +194,7 @@ namespace N_puzzle_cs
                     break;
                 case 4:
                     path = VLtest;
-                    fileName = "Test.txt";
+                    fileName = "TEST.txt";
                     break;
                 default:
                     break;

@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace N_puzzle_cs
 {
-	struct node
-	{
-		public int direction;
-		public int val;
-		public int depth;
-		public Grid parent;
-	};
+	
 	internal class priorityQueue
-    {
+    {/*
 		public node n;
 		public LinkedList<node> pq;
 		public LinkedListNode<node> index;
@@ -60,6 +54,6 @@ namespace N_puzzle_cs
 			index=pq.Last;
 			pq.AddAfter(index, n);
 			return ;
-		}
+		}*/
 	}
 }

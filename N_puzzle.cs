@@ -69,16 +69,16 @@ namespace N_puzzle_cs
                 if (VM[i])
                 {
                     Grid tmpg = new Grid(g);
-                   // tmpg.gparent = g;
-
+                    // tmpg.gparent = g;
+                    int tmpdir = g.lastMove;
                     g = g.movePiece(i,g);
                     tmpNode.parent = tmpg;
-                    tmpNode.val = g.ManCalcCost()+g.depth;
-
-                    tmpNode.depth = g.depth+1;
                     tmpNode.direction = i;
-                    ppq.Enqueue(tmpNode, tmpNode.val);
+                    g.lastMove = i;
+
+                    ppq.Enqueue(tmpNode, g.cost + g.changeInManCost() + g.depth);
                     g=g.movePieceBcak(i,g);
+                    g.lastMove=tmpdir;
                 }
 
             }
@@ -102,11 +102,9 @@ namespace N_puzzle_cs
 
                     g = g.movePiece(i, g);
                     tmpNode.parent = tmpg;
-                    tmpNode.val = g.HamCalcCost() + g.depth;
 
-                    tmpNode.depth = g.depth + 1;
                     tmpNode.direction = i;
-                    ppq.Enqueue(tmpNode, tmpNode.val);
+                    ppq.Enqueue(tmpNode, g.HamCalcCost() + g.depth);
                     g = g.movePieceBcak(i, g);
                 }
 
@@ -133,10 +131,10 @@ namespace N_puzzle_cs
                 g.lastMove = minNode.direction;
               //  g.gparent = tmppg;
                 g.depth++;
-                g.cost = g.ManCalcCost();
+                g.cost +=g.changeInManCost();
                 if (g.cost == 0)
                 {
-                    Console.WriteLine("depth is " + minNode.depth);
+                    Console.WriteLine("depth is " + g.depth);
                     minNode.parent.RenderGame();
                    // paintFinalSteps(g);
 
@@ -167,7 +165,7 @@ namespace N_puzzle_cs
 
                 if (g.HamCalcCost() == 0)
                 {
-                    Console.WriteLine("depth is " + minNode.depth);
+                    Console.WriteLine("depth is " + g.depth);
                    // paintFinalSteps(g);
                     g.solved = true;
                 }

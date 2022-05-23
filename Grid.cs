@@ -11,6 +11,12 @@ namespace N_puzzle_cs
 		public int x;
 		public int y;
     }
+    struct node
+    {
+        public int direction;
+        
+        public Grid parent;
+    };
     internal class Grid : ICloneable
     {
         public  int size;
@@ -84,46 +90,56 @@ namespace N_puzzle_cs
         {
             if (lastMove == -1)
                 return 0;
+            Vec added = new Vec();
             int startCost;
             int finCost;
             Grid tmp=new Grid(this);
             Vec tmpsp = spacePos;
+            switch (lastMove)
+            {
+                case 0:
+                    added.x = 0;
+                    added.y = 1;
+                    break;
+                case 1:
+                    added.x = 0;
+                    added.y = -1;
+                    break;
+                case 2:
+                    added.x = 1;
+                    added.y = 0;
+                    break;
+                case 3:
+                    added.x = -1;
+                    added.y = 0;
+                    break;
+                default:
+                    break;
+            }
+            added.x += spacePos.x;
+            added.y += spacePos.y;
 
-            tmp=movePieceBcak(lastMove,tmp);
             
             int div, mod;
-            if (tmp.grid[tmpsp.y,tmpsp.x] % size > 0)
+            if (grid[added.y, added.x] % size > 0)
             {
-                div = tmp.grid[tmpsp.y, tmpsp.x] / size;
-                mod = tmp.grid[tmpsp.y, tmpsp.x] % size - 1;
+                div = grid[added.y, added.x] / size;
+                mod = grid[added.y, added.x] % size - 1;
             }
             else
             {
-                div = tmp.grid[tmpsp.y, tmpsp.x] / size - 1;
+                div = grid[added.y, added.x] / size - 1;
                 mod = size - 1;
             }
 
-            int tmp1 = Math.Abs(div - tmpsp.y);
-            int tmp2 = Math.Abs(mod - tmpsp.x);
-            startCost = (tmp1 + tmp2);
-            tmpsp = tmp.spacePos;
-            tmp = movePiece(lastMove, tmp);
-
-            if (tmp.grid[tmpsp.y, tmpsp.x] % size > 0)
-            {
-                div = tmp.grid[tmpsp.y, tmpsp.x] / size;
-                mod = tmp.grid[tmpsp.y, tmpsp.x] % size - 1;
-            }
-            else
-            {
-                div = tmp.grid[tmpsp.y, tmpsp.x] / size - 1;
-                mod = size - 1;
-            }
-
-             tmp1 = Math.Abs(div - tmpsp.y);
-             tmp2 = Math.Abs(mod - tmpsp.x);
+            int tmp1 = Math.Abs(div - added.y);
+            int tmp2 = Math.Abs(mod - added.x);
             finCost = (tmp1 + tmp2);
 
+            
+             tmp1 = Math.Abs(div - spacePos.y);
+             tmp2 = Math.Abs(mod - spacePos.x);
+            startCost = (tmp1 + tmp2);
             return finCost - startCost;
         }
         public int ManCalcCost()
