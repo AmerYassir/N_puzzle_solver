@@ -9,7 +9,6 @@ namespace N_puzzle_cs
     
     internal class Program
     {
-
         static public int[,] TakeInput(string fileName)
         {
             FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read);
@@ -67,7 +66,7 @@ namespace N_puzzle_cs
             for (int i = output.Count - 2; i >= 0; i--)
             {
                 Console.WriteLine();
-                Console.Write("  Move #" + count);
+                Console.Write(" Move Number: " + count);
                 Console.WriteLine();
                 output[i].showHowSolvePuzzle();
                 count++;
@@ -87,7 +86,9 @@ namespace N_puzzle_cs
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
-            Console.WriteLine("                    **                           Welcome to N puzzle                            **");
+            Console.WriteLine("                    **                                                                          **");
+            Console.WriteLine("                    **                            Welcome to N puzzle                           **");
+            Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
             Console.WriteLine("                    **                                                                          **");
