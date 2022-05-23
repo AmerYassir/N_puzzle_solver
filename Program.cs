@@ -13,15 +13,15 @@ namespace N_puzzle_cs
         static public int[,] TakeInput(string fileName)
         {
             FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            StreamReader sr = new StreamReader(file);
+            StreamReader Sread = new StreamReader(file);
 
-            string sizeString = sr.ReadLine();
+            string sizeString = Sread.ReadLine();
             int size = int.Parse(sizeString);
-            sr.ReadLine();
+            Sread.ReadLine();
             int[,] n_Puzzle = new int[size, size];
             for (int i = 0; i < size; i++)
             {
-                string[] line = sr.ReadLine().Split();
+                string[] line = Sread.ReadLine().Split();
                 for (int j = 0; j < size; j++)
                 {
                     int currentNumber = int.Parse(line[j]);
@@ -34,7 +34,12 @@ namespace N_puzzle_cs
         {
             N_puzzle p = new N_puzzle(input, size);
 
-            if (Ham==0)
+            if (!p.IsSolveable())
+            {
+                Console.WriteLine("Not Solvable ...\n");
+                return;
+            }
+            if (Ham==1)
             {
                 p.gameLoop(p.FirstGrid);
                 return;
@@ -72,7 +77,7 @@ namespace N_puzzle_cs
             Console.WriteLine();
             Console.WriteLine("Total # of movements = " + (output.Count - 1));
         }
-        static public void start(int[,] input)
+        static public void start()
         {
 
             Console.WriteLine("                    ******************************************************************************");
@@ -92,6 +97,109 @@ namespace N_puzzle_cs
             Console.WriteLine("                    ******************************************************************************");
             Console.WriteLine();
 
+            string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan Only\\";
+            string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
+            string VLtest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\V. Large test case\\TEST.txt";
+            string NotSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Unsolvable puzzles\\";
+
+            int select;
+            string path="";
+            string fileName="";
+            Console.WriteLine("select the input from ");
+            Console.WriteLine("1. Complete solvable Manhatten only ");
+            Console.WriteLine("2. Complete solvable Manhatten & Hamming ");
+            Console.WriteLine("1. Complete Unsolvable ");
+            Console.WriteLine("2. Complete Very Large");
+            select = Convert.ToInt16(Console.ReadLine());
+            switch (select)
+            {
+                case 1:
+                    path= ComMTest;
+                    Console.WriteLine("what file do you want? ");
+                    Console.WriteLine(".1 15 Puzzle 1");
+                    Console.WriteLine(".2 15 Puzzle 3");
+                    Console.WriteLine(".3 15 Puzzle 4");
+                    Console.WriteLine(".4 15 Puzzle 5");
+                    select = Convert.ToInt16(Console.ReadLine());
+                    switch (select)
+                    {
+                        case 1:
+                            fileName = "15 Puzzle 1.txt";
+                            break;
+                        case 2:
+                            fileName = "15 Puzzle 3.txt";
+                            break;
+                        case 3:
+                            fileName = "15 Puzzle 4.txt";
+                            break;
+                        case 4:
+                            fileName = "15 Puzzle 5.txt";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 2:
+                    path = ComMaHTest;
+                    Console.WriteLine("what file do you want? ");
+                    Console.WriteLine(".1 50 Puzzle ");
+                    Console.WriteLine(".2 99 puzzle 1");
+                    Console.WriteLine(".3 99 puzzle 2");
+                    Console.WriteLine(".4 9999 puzzle");
+                    select = Convert.ToInt16(Console.ReadLine());
+                    switch (select)
+                    {
+                        case 1:
+                            fileName = "50 Puzzle.txt";
+                            break;
+                        case 2:
+                            fileName = "99 Puzzle - 1.txt";
+                            break;
+                        case 3:
+                            fileName = "99 Puzzle - 2.txt";
+                            break;
+                        case 4:
+                            fileName = "9999 Puzzle.txt";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 3:
+                    path = NotSolvable;
+                    Console.WriteLine("what file do you want? ");
+                    Console.WriteLine(".1 15 puzzle Un sol ");
+                    Console.WriteLine(".2 99 puzzle 1 Un sol");
+                    Console.WriteLine(".3 99 puzzle 2 Un sol");
+                    Console.WriteLine(".4 9999 puzzle Un sol");
+                    select = Convert.ToInt16(Console.ReadLine());
+                    switch (select)
+                    {
+                        case 1:
+                            fileName = "15 Puzzle 1 - Unsolvable.txt";
+                            break;
+                        case 2:
+                            fileName = "99 Puzzle - Unsolvable Case 1.txt";
+                            break;
+                        case 3:
+                            fileName = "99 Puzzle - Unsolvable Case 2.txt";
+                            break;
+                        case 4:
+                            fileName = "9999 Puzzle.txt";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 4:
+                    path = VLtest;
+                    fileName = "Test.txt";
+                    break;
+                default:
+                    break;
+            }
+            int[,] input = TakeInput(path+fileName);
+
             int Choose;
             Console.WriteLine("How do you want to solve the puzzle?");
             Console.WriteLine("1. solve by A* algorithm");
@@ -100,10 +208,20 @@ namespace N_puzzle_cs
             Console.Write("Enter the number of the solution method you want to solve the puzzle: ");
             Choose = Convert.ToInt16(Console.ReadLine());
             Console.WriteLine("------------------------------------------------------------------------");
+            N_puzzle p = new N_puzzle(input, input.GetLength(0));
 
+            if (!p.IsSolveable())
+            {
+                Console.WriteLine("Not Solvable ...\n");
+                return;
+            }
             if (Choose == 1)
             {
-                AS_Code(input, input.GetLength(0), 0);
+                Console.WriteLine("1. solve by Manhatten function");
+                Console.WriteLine("2. solve by Hamming function");
+                Console.Write("Enter the number of the herustix function you want to solve the puzzle: ");
+                Choose = Convert.ToInt16(Console.ReadLine());
+                AS_Code(input, input.GetLength(0), Choose);
             }
             else if (Choose == 2)
             {
@@ -112,20 +230,9 @@ namespace N_puzzle_cs
         }
         static void Main()
         {
-            //paths for tets folders
-            string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
-            //string ComMTest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
-            string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
-            //string ComMaHTest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
-            // file name in the used folder , dont forget to type .txt at the end
-            string fileName = "50 Puzzle.txt";
-            int[,] input = TakeInput(ComMaHTest + fileName);
+            
 
-            // use on of these algorithms
-            // BFS_Code(input,((input.GetLength(0))));
-            // AS_Code(input, input.GetLength(0), 0);
-
-            start(input);
+            start();
 
            
 

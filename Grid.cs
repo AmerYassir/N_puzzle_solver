@@ -21,8 +21,7 @@ namespace N_puzzle_cs
         public int depth;
         public int cost;
         public bool solved;
-        public bool[] validMoves;
-        public Grid gparent;
+        //public Grid gparent;
         public Grid(int[,] g,int insize)
         {
             grid=new int[insize,insize];
@@ -33,8 +32,7 @@ namespace N_puzzle_cs
             depth = 0;
             cost = 0;
             solved = false;
-            validMoves = new bool[4];
-            gparent = null;
+           // gparent = null;
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
@@ -63,28 +61,8 @@ namespace N_puzzle_cs
             depth = another.depth;
             cost = another.cost;
             solved = another.solved;
-            validMoves = another.validMoves;
             spacePos=another.spacePos;
-            gparent = another.gparent;
-        }
-        public void setData(Grid g)
-        {
-            size = g.size;
-            
-            spacePos = g.spacePos;
-            lastMove = g.lastMove;
-            depth = g.depth;
-            cost = g.cost;
-            solved = g.solved;
-            validMoves = g.validMoves;
-
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    grid[i,j] = (int)g.grid[i,j];
-                }
-            }
+           // gparent = another.gparent;
         }
 		public void RenderGame()
         {
@@ -261,8 +239,13 @@ namespace N_puzzle_cs
             }
             return g;
         }
-        public void checkValidMoves()
+        public void checkValidMoves(bool[]validMoves)
         {
+            // 0 is up
+            // 1 is down
+            // 2 is left
+            // 3 is right
+
             validMoves[0] = checkMove(0, -1);
             validMoves[1] = checkMove(0, 1);
             validMoves[2] = checkMove(-1, 0);

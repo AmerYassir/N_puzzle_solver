@@ -12,7 +12,6 @@ namespace N_puzzle_cs
     {
 
         PriorityQueue<node,int> ppq=new PriorityQueue<node,int>();
-        PriorityQueue<node,int> savedMoves =new PriorityQueue<node,int>();
         public Grid FirstGrid;
         public N_puzzle(int[,] g, int insize)
         {
@@ -61,19 +60,20 @@ namespace N_puzzle_cs
         }
         public Grid addChildrens(Grid g)
         {
-            g.checkValidMoves();
-            node tmpNode;
+            bool[] VM=new bool[4];
 
+            g.checkValidMoves(VM);
+            node tmpNode;
             for (int i = 0; i < 4; i++)
             {
-                if (g.validMoves[i])
+                if (VM[i])
                 {
                     Grid tmpg = new Grid(g);
-                    tmpg.gparent = g.gparent;
+                   // tmpg.gparent = g;
 
                     g = g.movePiece(i,g);
                     tmpNode.parent = tmpg;
-                    tmpNode.val = g.ManCalcCost()+ (g.depth+1)+ g.cost;
+                    tmpNode.val = g.ManCalcCost()+g.depth;
 
                     tmpNode.depth = g.depth+1;
                     tmpNode.direction = i;
@@ -87,20 +87,22 @@ namespace N_puzzle_cs
 
         public Grid addChildrens(Grid g,int Ham)
         {
-            g.checkValidMoves();
+            bool[] VM = new bool[4];
+
+            g.checkValidMoves(VM);
             node tmpNode;
 
             for (int i = 0; i < 4; i++)
             {
-                if (g.validMoves[i])
+                if (VM[i])
                 {
 
                     Grid tmpg = new Grid(g);
-                    tmpg.gparent = g.gparent;
+                  //  tmpg.gparent = g;
 
                     g = g.movePiece(i, g);
                     tmpNode.parent = tmpg;
-                    tmpNode.val = g.HamCalcCost() + (g.depth + 2) + g.cost;
+                    tmpNode.val = g.HamCalcCost() + g.depth;
 
                     tmpNode.depth = g.depth + 1;
                     tmpNode.direction = i;
@@ -119,20 +121,24 @@ namespace N_puzzle_cs
             g.cost=g.ManCalcCost();
             while (!g.solved)
             {
+                if (g.size == 3)
+                {
+                    g.RenderGame();
+                }
                 g = addChildrens(g);
 
                 minNode = ppq.Dequeue();
                 tmppg=new Grid(minNode.parent);
                 g =g.movePiece(minNode.direction,minNode.parent);
                 g.lastMove = minNode.direction;
-                g.gparent = tmppg;
+              //  g.gparent = tmppg;
                 g.depth++;
-                
-                if (g.ManCalcCost() == 0)
+                g.cost = g.ManCalcCost();
+                if (g.cost == 0)
                 {
                     Console.WriteLine("depth is " + minNode.depth);
                     minNode.parent.RenderGame();
-                    paintFinalSteps(g);
+                   // paintFinalSteps(g);
 
                     g.solved = true;
                 }
@@ -146,24 +152,28 @@ namespace N_puzzle_cs
             g.cost = g.HamCalcCost();
             while (!g.solved)
             {
+                if (g.size==3)
+                {
+                    g.RenderGame();
+                }
                 g = addChildrens(g,Ham);
                 minNode = ppq.Dequeue();
                 tmppg = new Grid(minNode.parent);
 
                 g = g.movePiece(minNode.direction, minNode.parent);
                 g.lastMove = minNode.direction;
-                g.gparent=tmppg;
+               // g.gparent=tmppg;
                 g.depth++;
 
                 if (g.HamCalcCost() == 0)
                 {
                     Console.WriteLine("depth is " + minNode.depth);
-                    paintFinalSteps(g);
+                   // paintFinalSteps(g);
                     g.solved = true;
                 }
             }
         }
-
+/*
         public void paintFinalSteps(Grid g)
         {
             int size = g.depth;
@@ -178,5 +188,6 @@ namespace N_puzzle_cs
                 output[size-i-1].RenderGame();
             }
         }
+*/
     }
 }
