@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace N_puzzle_cs
 {
     
     internal class Program
     {
+
         static public int[,] TakeInput(string fileName)
         {
             FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read);
@@ -97,24 +99,35 @@ namespace N_puzzle_cs
             Console.WriteLine("                    ******************************************************************************");
             Console.WriteLine();
 
+            /*
             string SampleTestNotSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Sample\\Sample Test\\Unsolvable Puzzles\\";
             string SampleTestSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
             string ComMTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan Only\\";
             string ComMaHTest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
             string VLtest = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\V. Large test case\\";
             string NotSolvable = "C:\\Users\\Amer\\source\\repos\\N_puzzle_cs\\Testcases\\Complete\\Complete Test\\Unsolvable puzzles\\";
-            
+            */
+
+            string SampleTestNotSolvable = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Sample\\Sample Test\\Unsolvable Puzzles\\";
+            string SampleTestSolvable = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Sample\\Sample Test\\Solvable Puzzles\\";
+            string ComMTest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan Only\\";
+            string ComMaHTest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Complete\\Complete Test\\Solvable puzzles\\Manhattan & Hamming\\";
+            string VLtest = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Complete\\Complete Test\\V. Large test case\\";
+            string NotSolvable = "C:\\Users\\ayamo\\Documents\\GitHub\\N_puzzle_solver\\Testcases\\Complete\\Complete Test\\Unsolvable puzzles\\";
+
+            Stopwatch stopwatch = new Stopwatch();
+
             int select;
             string path="";
             string fileName="";
-            Console.WriteLine(" select the input from ");
+            Console.WriteLine(" Select the input from ");
             Console.WriteLine(" 1. Sample Test ");
             Console.WriteLine(" 2. Complete Test ");
             Console.Write("  Enter your choice: ");
             select = Convert.ToInt16(Console.ReadLine());
-            Console.WriteLine("------------------------------------------------------------------------");
+            Console.WriteLine("------------------------------------------------------------------------------");
 
-            switch(select)
+            switch (select)
             {
                 case 1:
                     Console.WriteLine(" Select the input from ");
@@ -122,8 +135,8 @@ namespace N_puzzle_cs
                     Console.WriteLine(" 2. Sample Unsolvable ");
                     Console.Write("  Enter your choice: ");
                     select = Convert.ToInt16(Console.ReadLine());
-                    Console.WriteLine("------------------------------------------------------------------------");
-                    switch(select)
+                    Console.WriteLine("------------------------------------------------------------------------------");
+                    switch (select)
                     {
                         case 1:
                             path = SampleTestSolvable;
@@ -136,7 +149,7 @@ namespace N_puzzle_cs
                             Console.WriteLine(" 6. 24 Puzzle 2");
                             Console.Write("  Enter the file number you want: ");
                             select = Convert.ToInt16(Console.ReadLine());
-                            Console.WriteLine("------------------------------------------------------------------------");
+                            Console.WriteLine("------------------------------------------------------------------------------");
 
                             switch (select)
                             {
@@ -172,7 +185,7 @@ namespace N_puzzle_cs
                             Console.WriteLine(" 5. 15 Puzzle - Case 3");
                             Console.Write("  Enter the file number you want: ");
                             select = Convert.ToInt16(Console.ReadLine());
-                            Console.WriteLine("------------------------------------------------------------------------");
+                            Console.WriteLine("------------------------------------------------------------------------------");
 
                             switch (select)
                             {
@@ -207,8 +220,7 @@ namespace N_puzzle_cs
                     Console.WriteLine(" 4. Complete Very Large");
                     Console.Write("  Enter your choice: ");
                     select = Convert.ToInt16(Console.ReadLine());
-                    Console.WriteLine("------------------------------------------------------------------------");
-
+                    Console.WriteLine("------------------------------------------------------------------------------");
                     switch (select)
                     {
                         case 1:
@@ -220,7 +232,7 @@ namespace N_puzzle_cs
                             Console.WriteLine(" 4. 15 Puzzle 5");
                             Console.Write("  Enter the file number you want: ");
                             select = Convert.ToInt16(Console.ReadLine());
-                            Console.WriteLine("------------------------------------------------------------------------");
+                            Console.WriteLine("------------------------------------------------------------------------------");
 
                             switch (select)
                             {
@@ -278,7 +290,7 @@ namespace N_puzzle_cs
                             Console.WriteLine(" 4. 9999 Puzzle");
                             Console.Write("  Enter the file number you want: ");
                             select = Convert.ToInt16(Console.ReadLine());
-                            Console.WriteLine("------------------------------------------------------------------------");
+                            Console.WriteLine("------------------------------------------------------------------------------");
 
                             switch (select)
                             {
@@ -314,11 +326,11 @@ namespace N_puzzle_cs
 
             int Choose;
             Console.WriteLine(" How do you want to solve the puzzle?");
-            Console.WriteLine(" 1. solve by A* algorithm");
-            Console.WriteLine(" 2. solve by BFS algorithm");
+            Console.WriteLine(" 1. Solve by A* algorithm");
+            Console.WriteLine(" 2. Solve by BFS algorithm");
             Console.Write("  Enter the number of the solution method you want to solve the puzzle: ");
             Choose = Convert.ToInt16(Console.ReadLine());
-            Console.WriteLine("------------------------------------------------------------------------");
+            Console.WriteLine("------------------------------------------------------------------------------");
             N_puzzle p = new N_puzzle(input, input.GetLength(0));
 
             if (!p.IsSolveable())
@@ -329,15 +341,22 @@ namespace N_puzzle_cs
             switch (Choose)
             {
                 case 1:
-                    Console.WriteLine(" 1. solve by Manhatten function");
-                    Console.WriteLine(" 2. solve by Hamming function");
+                    Console.WriteLine(" 1. Solve by Manhatten function");
+                    Console.WriteLine(" 2. Solve by Hamming function");
                     Console.Write("  Enter the number of the herustix function you want to solve the puzzle: ");
                     Choose = Convert.ToInt16(Console.ReadLine());
-                    Console.WriteLine("------------------------------------------------------------------------");
+                    Console.WriteLine("------------------------------------------------------------------------------");
+                    stopwatch.Start();
                     AS_Code(input, input.GetLength(0), Choose);
+                    stopwatch.Stop();
+                    Console.WriteLine("Total time: " + stopwatch.Elapsed.ToString());
                     break;
                 case 2:
+                    stopwatch.Start();
                     BFS_Code(input, ((input.GetLength(0))));
+                    stopwatch.Stop();
+                    Console.WriteLine("Total time: " + stopwatch.Elapsed.ToString());
+
                     break;
                 default:
                     break;
